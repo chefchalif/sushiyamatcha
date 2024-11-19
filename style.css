@@ -1,4 +1,3 @@
-/* Begin CSS File */
 /* Styling for Sushi Ya Matcha */
 
 /* Reset and General Styles */
@@ -179,6 +178,7 @@ nav a:hover {
 }
 
 .btn {
+    display: inline-block; /* Ensure the button's width is only as wide as its content */
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
@@ -226,9 +226,18 @@ nav a:hover {
 }
 
 /* Reviews Section */
+
+.reviews-summary-title {
+    display: flex; /* Enables Flexbox */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    height: 100%; /* Ensure the parent has a defined height */
+}
+
 .google-reviews {
-    padding: 80px 20px;
+    padding: 10px 20px;
     background-color: #f9f9f9;
+    padding-bottom: 20px;
 }
 
 .reviews-summary {
@@ -292,9 +301,9 @@ nav a:hover {
 
 .reviews-track {
     display: flex;
-    gap: 20px;
-    animation: scrollReviews 60s linear infinite;
     width: calc(200% + 40px);
+    padding-bottom: 30px;
+    padding-top: 10px;
 }
 
 .review {
@@ -305,7 +314,7 @@ nav a:hover {
     min-width: 300px;
     max-width: 400px;
     flex: 0 0 auto;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 8px 9px 0px rgba(0, 0, 0, 0.05);
     opacity: 0;
     transform: translateY(50px);
     transition: all 0.5s ease-in-out;
@@ -372,11 +381,12 @@ nav a:hover {
 .reviews-track {
     display: flex;
     width: calc(200% + 40px); /* Adjust width based on duplication */
+    animation: scrollReviews 60s linear infinite;
 }
 
 /* Locate Us Section */
 .locate-us {
-    padding: 80px 20px;
+    padding: 40px 20px;
     background-color: #ffffff;
     text-align: center;
 }
@@ -446,7 +456,8 @@ nav a:hover {
 
 .about-image img {
     width: 100%;
-    height: auto;
+    height: 300px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures the image covers the container without distortion */
     border-radius: 10px;
 }
 
@@ -475,20 +486,25 @@ footer {
 @media only screen and (max-width: 768px) {
     /* Header */
     .header-top {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        width: 80%;
+        flex-direction: row; /* Align logo and title horizontally */
+        width: 80%; /* Make header-top take 80% of screen width */
+        justify-content: center;
     }
 
     .logo {
-        width: 40%;
+        width: 40px; /* Reduce logo size on mobile */
     }
 
     header h1 {
-        font-size: 1.8em;
-        text-align: center;
-        width: 80%;
+        font-size: 1.5em; /* Adjust title size */
+        text-align: left; /* Align title to the left */
+        flex: 1; /* Allow title to take remaining space */
+    }
+
+    /* Navigation */
+    nav ul {
+        flex-direction: row;
+        gap: 15px;
     }
 
     /* Hero Section */
@@ -506,12 +522,42 @@ footer {
     }
 
     .btn {
+        display: inline-block; /* Ensure the button's width is only as wide as its content */
+        padding: 10px 0px; /* Add some spacing inside the button */
         width: 80%;
         text-align: center;
         font-size: 1em;
+        white-space: nowrap; /* Prevents text from wrapping to the next line */
+        overflow: hidden;    /* Hides any text that overflows the button's width */
+        text-overflow: ellipsis; /* Adds an ellipsis (...) if the text is too long */
     }
 
     /* Reviews Section */
+    
+    .reviews-carousel {
+        width: 100%;
+        overflow: hidden;
+        position: relative; /* Ensure positioning context for absolute children */
+        height: 350px; /* Adjust based on the height of your reviews */
+    }
+
+    .reviews-carousel .review {
+        position: absolute;
+        top: auto;
+        justify-content: center;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%; /* Set width to 80% of the container */
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        z-index: 1; /* Ensure reviews stack correctly */
+    }
+
+    .reviews-carousel .review.active {
+        opacity: 1;
+        z-index: 2; /* Bring the active review to the front */
+    }
+    
     .reviews-summary h2 {
         font-size: 2em;
     }
@@ -522,39 +568,42 @@ footer {
         font-size: 1.5em;
     }
 
-    .google-reviews .rating-group .rating, 
-    .google-reviews .rating-group .uber-rating {
+    .rating, .uber-rating {
         text-align: left;
     }
 
-    .reviews-carousel {
-        animation: none;
-    }
-
+    /* Remove animation on mobile */
     .reviews-track {
-        flex-direction: column;
         animation: none;
-    }
-
-    .review {
-        min-width: 100%;
-        max-width: 100%;
-        opacity: 1;
-        transform: translateY(0);
-        box-shadow: none;
-        border: none;
-        margin-bottom: 20px;
-    }
-
-    .review p {
-        font-size: 1.1em;
+        transform: none;
+        width: 100%;
     }
 
     /* Locate Us Section */
     .locate-us h2 {
-        font-size: 2em;
+        font-size: 2em; /* Increase title size for better visibility */
     }
 
+    .location-container {
+        flex-direction: column; /* Stack map and image vertically */
+        align-items: center;    /* Center align items */
+        gap: 20px;              /* Space between map and image */
+    }
+
+    .map, .restaurant-image {
+        flex: 1 1 100%;         /* Make both map and image take full width */
+        max-width: 100%;        /* Ensure they don't exceed container width */
+    }
+
+    .map iframe {
+        height: 300px;          /* Adjust map height for mobile */
+        width: 100%;
+    }
+
+    .restaurant-image img {
+        height: auto;           /* Maintain aspect ratio */
+        max-height: 300px;      /* Ensure consistent image height */
+    }
     /* About Us Section */
     .about {
         flex-direction: column;
@@ -569,35 +618,7 @@ footer {
         margin-top: 20px;
     }
 
-    /* Adjust Locate Us Section */
-    .locate-us h2 {
-        font-size: 2em;
-    }
-
-    /* Mobile Review Carousel */
-    @media only screen and (max-width: 768px) {
-        .reviews-carousel {
-            position: relative;
-            width: 100%;
-        }
-
-        .reviews-track {
-            display: none;
-        }
-
-        .reviews-carousel {
-            display: block;
-        }
-
-        .review {
-            position: absolute;
-            width: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .review.active {
-            opacity: 1;
-        }
+    .about-image img {
+        height: 200px; /* Adjust height for mobile */
     }
 }
