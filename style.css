@@ -1,0 +1,349 @@
+/* CSS Reset and Box Sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* General Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #3a3a3a;
+    line-height: 1.5;
+    background-color: #ffffff;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style-type: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Header */
+header {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+header.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+nav a {
+    font-weight: bold;
+    color: #3a3a3a;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #e74c3c;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: 0;
+    perspective: 1000px;
+}
+
+.hero-container {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.slideshow-container {
+    position: relative;
+    height: 100%;
+    margin: 0;
+}
+
+.slides {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.slides.active {
+    opacity: 1;
+}
+
+.slides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translateZ(0);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.5)
+    );
+    pointer-events: none;
+}
+
+/* Hero Text */
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    text-align: center;
+    z-index: 2;
+    transition: all 0.3s ease-in-out;
+}
+
+.hero-text h2 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Hero Buttons */
+.hero-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.primary-btn {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+.primary-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+.secondary-btn:hover {
+    background-color: #ffffff;
+    color: #e74c3c;
+    transform: translateY(-2px);
+}
+
+.reviews-summary {
+    text-align: center;
+    margin: 40px auto; /* Centering and adding spacing */
+}
+
+.reviews-summary h2 {
+    color: #e74c3c; /* Red color for the header */
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.rating-group {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Align items vertically */
+    gap: 40px; /* Space between Google and Uber Eats ratings */
+    flex-wrap: wrap; /* Wrap on smaller screens */
+    margin-top: 20px; /* Add spacing between title and ratings */
+}
+
+.rating, .uber-rating {
+    text-align: center;
+}
+
+.star-icon {
+    color: #ffd700; /* Gold color for the star icon */
+    font-size: 1.2em;
+}
+
+.review-link {
+    text-decoration: none;
+    color: #e74c3c; /* Match the theme with red links */
+    font-weight: bold;
+}
+
+.review-link:hover {
+    text-decoration: underline;
+    color: #c0392b; /* Darker red on hover */
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 749px) {
+    .rating-group {
+        flex-direction: column; /* Stack ratings vertically on smaller screens */
+        gap: 20px;
+    }
+}
+/* Reviews Carousel */
+.reviews-carousel {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    width: max-content;
+    animation: scroll 30s linear infinite; /* Continuous scrolling */
+}
+
+.review {
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+    width: 40vw; /* Larger boxes */
+    margin-right: 15px; /* Increased spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Infinite Scrolling Animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+
+/* About Section */
+.about {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.about h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #e74c3c;
+}
+
+.about p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+/* Map Section */
+.map {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+}
+
+.map h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #e74c3c;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+    border-top: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+    color: #666666;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .hero-text h2 {
+        font-size: 2.5em;
+    }
+
+    .hero-text p {
+        font-size: 1.2em;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .or-text {
+        display: none;
+    }
+
+    .review {
+        flex: 0 0 250px;
+        padding: 20px;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-250px * 5))} /* Adjust based on number of reviews */
+    }
+}
