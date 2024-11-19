@@ -1,4 +1,8 @@
-/* CSS Reset and Box Sizing */
+/* Begin CSS File */
+/* Styling for Sushi Ya Matcha */
+
+/* Reset and General Styles */
+/* Consistent box-sizing, margin reset, and font styling */
 *,
 *::before,
 *::after {
@@ -7,10 +11,9 @@
     padding: 0;
 }
 
-/* General Styles */
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: #3a3a3a;
+    color: #463e1a; /* Dark Olive Green */
     line-height: 1.5;
     background-color: #ffffff;
     overflow-x: hidden;
@@ -40,6 +43,9 @@ header {
     top: 0;
     z-index: 1000;
     transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header.scrolled {
@@ -47,13 +53,25 @@ header.scrolled {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-header h1 {
-    text-align: center;
-    font-size: 2em;
-    color: #e74c3c;
-    margin-bottom: 10px;
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and title */
+    margin-bottom: 10px; /* Space between header-top and nav */
 }
 
+.logo {
+    width: 60px; /* Adjust size as needed */
+    height: auto;
+}
+
+header h1 {
+    font-size: 2em;
+    color: #ffbe58; /* Vibrant Yellow-Orange */
+    margin: 0;
+}
+
+/* Navigation */
 nav ul {
     display: flex;
     justify-content: center;
@@ -62,12 +80,13 @@ nav ul {
 
 nav a {
     font-weight: bold;
-    color: #3a3a3a;
+    color: #463e1a; /* Dark Olive Green */
     transition: color 0.3s;
+    font-size: 1em;
 }
 
 nav a:hover {
-    color: #e74c3c;
+    color: #ffbe58; /* Vibrant Yellow-Orange */
 }
 
 /* Hero Section */
@@ -76,39 +95,47 @@ nav a:hover {
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    margin-top: 0;
-    perspective: 1000px;
-}
-
-.hero-container {
-    position: relative;
-    height: 100%;
-    transform-style: preserve-3d;
+    margin-top: 80px; /* To account for fixed header */
 }
 
 .slideshow-container {
     position: relative;
+    width: 100%;
     height: 100%;
-    margin: 0;
 }
 
 .slides {
     position: absolute;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
+    overflow: hidden;
 }
 
 .slides.active {
     opacity: 1;
+    z-index: 1;
 }
 
-.slides img {
+.slide-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateY(0);
+    will-change: transform;
+}
+
+.slide-inner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: translateZ(0);
+    display: block;
+    animation: zoomMove 30s ease-in-out infinite alternate;
 }
 
 .overlay {
@@ -117,15 +144,11 @@ nav a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.3),
-        rgba(0, 0, 0, 0.5)
-    );
+    background: rgba(0, 0, 0, 0.5);
     pointer-events: none;
+    z-index: 2;
 }
 
-/* Hero Text */
 .hero-text {
     position: absolute;
     top: 50%;
@@ -133,8 +156,7 @@ nav a:hover {
     transform: translate(-50%, -50%);
     color: #ffffff;
     text-align: center;
-    z-index: 2;
-    transition: all 0.3s ease-in-out;
+    z-index: 3;
 }
 
 .hero-text h2 {
@@ -149,7 +171,6 @@ nav a:hover {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Hero Buttons */
 .hero-buttons {
     display: flex;
     align-items: center;
@@ -169,12 +190,13 @@ nav a:hover {
 }
 
 .primary-btn {
-    background-color: #e74c3c;
+    background-color: #ffbe58; /* Vibrant Yellow-Orange */
     color: #ffffff;
+    border: 3px solid #ffbe58;
 }
 
 .primary-btn:hover {
-    background-color: #c0392b;
+    background-color: #e6ad4f; /* Slightly darker shade */
     transform: translateY(-2px);
 }
 
@@ -186,64 +208,93 @@ nav a:hover {
 
 .secondary-btn:hover {
     background-color: #ffffff;
-    color: #e74c3c;
+    color: #ffbe58; /* Vibrant Yellow-Orange */
     transform: translateY(-2px);
+}
+
+/* Animations for Zoom and Movement */
+@keyframes zoomMove {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+    50% {
+        transform: scale(1.05) translate(2%, 2%);
+    }
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+/* Reviews Section */
+.google-reviews {
+    padding: 80px 20px;
+    background-color: #f9f9f9;
 }
 
 .reviews-summary {
     text-align: center;
-    margin: 40px auto; /* Centering and adding spacing */
+    margin: 40px auto;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-in-out;
+}
+
+.reviews-summary.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .reviews-summary h2 {
-    color: #e74c3c; /* Red color for the header */
+    color: #ffbe58; /* Vibrant Yellow-Orange */
     font-size: 2.5em;
     margin-bottom: 20px;
 }
 
 .rating-group {
+    font-weight: bold;
+    font-size: 1.2em;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Align items vertically */
-    gap: 40px; /* Space between Google and Uber Eats ratings */
-    flex-wrap: wrap; /* Wrap on smaller screens */
-    margin-top: 20px; /* Add spacing between title and ratings */
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .rating, .uber-rating {
     text-align: center;
 }
 
+.rating-source {
+    font-weight: bold;
+}
+
 .star-icon {
-    color: #ffd700; /* Gold color for the star icon */
+    color: #ffbe58; /* Vibrant Yellow-Orange */
     font-size: 1.2em;
 }
 
 .review-link {
     text-decoration: none;
-    color: #e74c3c; /* Match the theme with red links */
+    color: #ffbe58; /* Vibrant Yellow-Orange */
     font-weight: bold;
 }
 
 .review-link:hover {
     text-decoration: underline;
-    color: #c0392b; /* Darker red on hover */
+    color: #e6ad4f;
 }
 
-/* Responsive Design */
-@media only screen and (max-width: 749px) {
-    .rating-group {
-        flex-direction: column; /* Stack ratings vertically on smaller screens */
-        gap: 20px;
-    }
-}
-/* Reviews Carousel */
 .reviews-carousel {
+    overflow: hidden;
+    position: relative;
+}
+
+.reviews-track {
     display: flex;
     gap: 20px;
-    padding: 20px 0;
-    width: max-content;
-    animation: scroll 30s linear infinite; /* Continuous scrolling */
+    animation: scrollReviews 60s linear infinite;
+    width: calc(200% + 40px);
 }
 
 .review {
@@ -251,57 +302,152 @@ nav a:hover {
     border: 1px solid #eee;
     border-radius: 10px;
     padding: 20px;
-    width: 40vw; /* Larger boxes */
-    margin-right: 15px; /* Increased spacing */
+    min-width: 300px;
+    max-width: 400px;
+    flex: 0 0 auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease-in-out;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-/* Infinite Scrolling Animation */
-@keyframes scroll {
+.review.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.review p {
+    font-size: 1em;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    color: #463e1a; /* Dark Olive Green */
+}
+
+.review-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px; /* Adjust the spacing between author and date */
+}
+
+.review-author {
+    font-weight: bold;
+    color: #463e1a; /* Dark Olive Green */
+}
+
+.review-date a {
+    color: #ffbe58; /* Vibrant Yellow-Orange */
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.review-date a:hover {
+    text-decoration: underline;
+    color: #e6ad4f;
+}
+
+/* Hide scrollbar */
+.reviews-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.reviews-carousel {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+}
+
+/* Seamless Auto-scrolling */
+@keyframes scrollReviews {
     0% {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-100%);
+        transform: translateX(-50%);
     }
 }
 
+.reviews-track {
+    display: flex;
+    width: calc(200% + 40px); /* Adjust width based on duplication */
+}
 
-/* About Section */
+/* Locate Us Section */
+.locate-us {
+    padding: 80px 20px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.locate-us h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #ffbe58; /* Vibrant Yellow-Orange */
+}
+
+.locate-us .address {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #463e1a; /* Dark Olive Green */
+}
+
+.location-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.map, .restaurant-image {
+    flex: 1 1 45%;
+    max-width: 600px;
+}
+
+.restaurant-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* About Us Section */
 .about {
     padding: 80px 20px;
-    text-align: center;
-    background-color: #ffffff;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
-.about h2 {
+.about-content {
+    flex: 1 1 45%;
+    max-width: 600px;
+}
+
+.about-content h2 {
     font-size: 2.5em;
-    margin-bottom: 30px;
-    color: #e74c3c;
+    margin-bottom: 20px;
+    color: #ffbe58; /* Vibrant Yellow-Orange */
 }
 
-.about p {
-    max-width: 800px;
-    margin: 0 auto;
+.about-content p {
     font-size: 1.1em;
     line-height: 1.8;
+    color: #463e1a; /* Dark Olive Green */
 }
 
-/* Map Section */
-.map {
-    padding: 60px 20px;
-    background-color: #f9f9f9;
+.about-image {
+    flex: 1 1 45%;
+    max-width: 600px;
+    margin-top: 20px;
 }
 
-.map h2 {
-    text-align: center;
-    font-size: 2.5em;
-    margin-bottom: 30px;
-    color: #e74c3c;
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 
 /* Footer */
@@ -310,11 +456,42 @@ footer {
     border-top: 1px solid #eee;
     padding: 20px;
     text-align: center;
-    color: #666666;
+    color: #443c19; /* Rich Brownish Green */
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive Design */
 @media only screen and (max-width: 768px) {
+    /* Header */
+    .header-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 80%;
+    }
+
+    .logo {
+        width: 40%;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+        text-align: center;
+        width: 80%;
+    }
+
+    /* Hero Section */
     .hero-text h2 {
         font-size: 2.5em;
     }
@@ -329,21 +506,98 @@ footer {
     }
 
     .btn {
-        width: 100%;
+        width: 80%;
         text-align: center;
+        font-size: 1em;
     }
 
-    .or-text {
-        display: none;
+    /* Reviews Section */
+    .reviews-summary h2 {
+        font-size: 2em;
+    }
+
+    .rating-group {
+        flex-direction: column;
+        gap: 20px;
+        font-size: 1.5em;
+    }
+
+    .google-reviews .rating-group .rating, 
+    .google-reviews .rating-group .uber-rating {
+        text-align: left;
+    }
+
+    .reviews-carousel {
+        animation: none;
+    }
+
+    .reviews-track {
+        flex-direction: column;
+        animation: none;
     }
 
     .review {
-        flex: 0 0 250px;
-        padding: 20px;
+        min-width: 100%;
+        max-width: 100%;
+        opacity: 1;
+        transform: translateY(0);
+        box-shadow: none;
+        border: none;
+        margin-bottom: 20px;
     }
 
-    @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-250px * 5))} /* Adjust based on number of reviews */
+    .review p {
+        font-size: 1.1em;
+    }
+
+    /* Locate Us Section */
+    .locate-us h2 {
+        font-size: 2em;
+    }
+
+    /* About Us Section */
+    .about {
+        flex-direction: column;
+    }
+
+    .about-content, .about-image {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .about-image {
+        margin-top: 20px;
+    }
+
+    /* Adjust Locate Us Section */
+    .locate-us h2 {
+        font-size: 2em;
+    }
+
+    /* Mobile Review Carousel */
+    @media only screen and (max-width: 768px) {
+        .reviews-carousel {
+            position: relative;
+            width: 100%;
+        }
+
+        .reviews-track {
+            display: none;
+        }
+
+        .reviews-carousel {
+            display: block;
+        }
+
+        .review {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .review.active {
+            opacity: 1;
+        }
     }
 }
