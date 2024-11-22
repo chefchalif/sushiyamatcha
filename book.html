@@ -1,0 +1,200 @@
+<!-- Insert this PHP code at the top of your book.html file if it's a PHP file, or handle via JavaScript if it's purely HTML -->
+<?php
+if (isset($_GET['error'])) {
+    echo '<p style="color: red; text-align: center;">' . htmlspecialchars($_GET['error']) . '</p>';
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Table - Sushi Ya Matcha</title>
+    <!-- Google Fonts: Archivo Black and Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Link to your existing CSS file -->
+    <meta name="description" content="Book a table at West Island's Top Rated Sushi Restaurant.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to the booking page */
+
+        /* Booking Section */
+        .booking-section {
+            padding: 120px 20px;
+            background-color: #000000; /* Fully black background */
+            color: #ffffff; /* White text for contrast */
+            text-align: center;
+        }
+
+        .booking-section h2 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5em;
+            color: #ffbe58; /* Vibrant Yellow-Orange */
+            margin-bottom: 20px;
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.1em;
+            color: #ffffff;
+        }
+
+        .booking-form input,
+        .booking-form textarea,
+        .booking-form select {
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #555555;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            box-sizing: border-box;
+            display: flex;
+        }
+
+        .booking-form input::placeholder,
+        .booking-form textarea::placeholder {
+            color: #bbbbbb;
+        }
+
+        .booking-form button {
+            background-color: #ffbe58; /* Vibrant Yellow-Orange */
+            color: #000000; /* Dark text for contrast */
+            border: none;
+            padding: 15px 30px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .booking-form button:hover {
+            background-color: #e6ad4f; /* Slightly darker shade */
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media only screen and (max-width: 768px) {
+            .booking-form {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <ul>
+                <img src="images/logo.png" alt="Sushi Ya Matcha Logo" class="logo">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="https://sushiyamatcha.order-online.ai/#/" target="_blank" rel="noopener">Menu</a></li>
+                <li><a href=book.html>Book</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Booking Section -->
+    <section class="booking-section" id="booking">
+        <h2>Book a Table</h2>
+        <form class="booking-form" action="submit_booking.php" method="POST">
+            <!-- Name Field -->
+            <label for="name">Full Name<span style="color: red;">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+
+            <!-- Phone Number Field -->
+            <label for="phone">Phone Number<span style="color: red;">*</span></label>
+            <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="(123) 456-7890"
+                pattern="\(\d{3}\) \d{3}-\d{4}"
+                maxlength="14"
+                inputmode="numeric"
+                required
+            >
+
+            <!-- Number of People Field -->
+            <label for="people">Number of People<span style="color: red;">*</span></label>
+            <select id="people" name="people" required>
+                <option value="" disabled selected>Select Number of People</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5+ (Add Notes)</option>
+            </select>
+
+            <!-- Notes Field -->
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Any special requests or notes (optional)"></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit Booking</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Sushi Ya Matcha. All rights reserved.
+    </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', function(e) {
+            let input = phoneInput.value;
+            
+            // Remove all non-digit characters
+            input = input.replace(/\D/g, '');
+
+            // Limit to first 10 digits
+            input = input.substring(0, 10);
+
+            // Format the input
+            const areaCode = input.substring(0, 3);
+            const middle = input.substring(3, 6);
+            const last = input.substring(6, 10);
+
+            if (input.length > 6) {
+                phoneInput.value = `(${areaCode}) ${middle}-${last}`;
+            } else if (input.length > 3) {
+                phoneInput.value = `(${areaCode}) ${middle}`;
+            } else if (input.length > 0) {
+                phoneInput.value = `(${areaCode}`;
+            }
+        });
+
+        // Optional: Prevent pasting non-numeric characters
+        phoneInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pasteData = e.clipboardData.getData('text').replace(/\D/g, '').substring(0, 10);
+            const areaCode = pasteData.substring(0, 3);
+            const middle = pasteData.substring(3, 6);
+            const last = pasteData.substring(6, 10);
+
+            if (pasteData.length > 6) {
+                phoneInput.value = `(${areaCode}) ${middle}-${last}`;
+            } else if (pasteData.length > 3) {
+                phoneInput.value = `(${areaCode}) ${middle}`;
+            } else if (pasteData.length > 0) {
+                phoneInput.value = `(${areaCode}`;
+            }
+        });
+    });
+</script>
+</body>
+</html>
